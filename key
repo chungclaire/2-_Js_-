@@ -183,6 +183,19 @@
                 <button class="key" id="key-backspace">← 백스페이스</button>
                 <button class="key" id="key-enter">엔터</button>
             </div>
+            <!-- 생략된 <head> 등은 그대로 두고 body 부분 아래만 수정합니다 -->
+
+            <!-- 언어 상태 표시 및 토글 -->
+            <div style="margin-bottom: 10px;">
+                <strong>현재 언어:</strong> <span id="current-lang">영어</span>
+            </div>
+
+            <!-- 타자기 키보드 전체 위에 삽입 -->
+            <!-- 한/영 전환용 버튼도 추가 -->
+            <div class="group control">
+                <button class="key" id="toggle-lang">한/영 전환</button>
+            </div>
+
         </div>
     </div>
 
@@ -229,92 +242,6 @@
         });
 
         let isKorean = false;
-
-        const enLayout = {
-            row1: ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
-            row2: ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';'],
-            row3: ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/']
-        };
-
-        const koLayout = {
-            row1: ['ㅂ', 'ㅈ', 'ㄷ', 'ㄱ', 'ㅅ', 'ㅛ', 'ㅕ', 'ㅑ', 'ㅐ', 'ㅔ'],
-            row2: ['ㅁ', 'ㄴ', 'ㅇ', 'ㄹ', 'ㅎ', 'ㅗ', 'ㅓ', 'ㅏ', 'ㅣ', ';'],
-            row3: ['ㅋ', 'ㅌ', 'ㅊ', 'ㅍ', 'ㅠ', 'ㅜ', 'ㅡ', ',', '.', '/']
-        };
-
-        function updateKeyboard() {
-            const keys = document.querySelectorAll('.letters .key');
-            const layout = isKorean ? koLayout : enLayout;
-            const flatKeys = [...layout.row1, ...layout.row2, ...layout.row3];
-
-            keys.forEach((btn, index) => {
-                const newKey = flatKeys[index];
-                btn.innerText = (newKey === '.') ? '한/영' : newKey;
-                btn.id = `key-${newKey}`;
-            });
-
-            document.getElementById("current-lang").innerText = isKorean ? "한글" : "영어";
-        }
-
-        // 텍스트 출력
-        function addText(text) {
-            const display = document.getElementById("display");
-            display.textContent += text;
-        }
-
-        function removeText() {
-            const display = document.getElementById("display");
-            display.textContent = display.textContent.slice(0, -1);
-        }
-
-        // 키보드 타이핑
-        document.addEventListener('keydown', function (event) {
-            let key = event.key;
-
-            if (key === '.') {
-                isKorean = !isKorean;
-                updateKeyboard();
-                return;
-            }
-
-            if (key.length === 1) {
-                addText(key);
-            } else if (key === 'Backspace') {
-                removeText();
-            } else if (key === 'Enter') {
-                addText('\n');
-            }
-
-            const keyButton = document.getElementById(`key-${key}`);
-            if (keyButton) {
-                keyButton.classList.add('active');
-                setTimeout(() => {
-                    keyButton.classList.remove('active');
-                }, 100);
-            }
-        });
-
-        // 클릭 시 한영 전환
-        document.getElementById("toggle-lang").addEventListener("click", () => {
-            isKorean = !isKorean;
-            updateKeyboard();
-        });
-
-        // 백스페이스, 엔터
-        document.getElementById("key-backspace").addEventListener('click', removeText);
-        document.getElementById("key-enter").addEventListener('click', function () {
-            addText('\n');
-        });
-
-        updateKeyboard(); // 최초 렌더링
-
-        const korKeys = {
-            row0: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-            row1: ['ㅂ', 'ㅈ', 'ㄷ', 'ㄱ', 'ㅅ', 'ㅛ', 'ㅕ', 'ㅑ', 'ㅐ', 'ㅔ'],
-            row2: ['ㅁ', 'ㄴ', 'ㅇ', 'ㄹ', 'ㅎ', 'ㅗ', 'ㅓ', 'ㅏ', 'ㅣ', ';'],
-            row3: ['ㅋ', 'ㅌ', 'ㅊ', 'ㅍ', 'ㅠ', 'ㅜ', 'ㅡ', ',', '.', '/']
-        };
-
 
         const enLayout = {
             row1: ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
